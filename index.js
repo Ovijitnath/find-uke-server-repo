@@ -27,6 +27,13 @@ async function run() {
             res.send(catagories);
         });
 
+        app.get('/Catagories/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const catagories = await catagoryCollection.findOne(query);
+            res.send(catagories);
+        });
+
     }
     finally {
 
