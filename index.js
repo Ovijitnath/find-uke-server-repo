@@ -19,19 +19,20 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         const catagoryCollection = client.db('findUke').collection('Catagories');
+        const productsCollection = client.db('findUke').collection('products');
 
-        app.get('/Catagories', async (req, res) => {
+        app.get('/catagories', async (req, res) => {
             const query = {}
             const cursor = catagoryCollection.find(query);
             const catagories = await cursor.toArray();
             res.send(catagories);
         });
 
-        app.get('/Catagories/:id', async (req, res) => {
+        app.get('/catagory/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const catagories = await catagoryCollection.findOne(query);
-            res.send(catagories);
+            const query = { category_id: id };
+            const products = await productsCollection.find(query).toArray();
+            return res.send(products);
         });
 
     }
