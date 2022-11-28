@@ -20,6 +20,7 @@ async function run() {
     try {
         const catagoryCollection = client.db('findUke').collection('Catagories');
         const productsCollection = client.db('findUke').collection('products');
+        const bookingsCollection = client.db('findUke').collection('bookings');
 
         app.get('/catagories', async (req, res) => {
             const query = {}
@@ -33,6 +34,19 @@ async function run() {
             const query = { category_id: id };
             const products = await productsCollection.find(query).toArray();
             return res.send(products);
+        });
+
+
+        app.post('/bookings', async (req, res) => {
+            const booking = req.body;
+            console.log(booking);
+            // const query = {
+            //     appointmentDate: booking.appointmentDate,
+            //     email: booking.email,
+            //     treatment: booking.treatment 
+            // }
+            const result = await bookingsCollection.insertOne(booking)
+            res.send(result);
         });
 
     }
