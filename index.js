@@ -21,6 +21,7 @@ async function run() {
         const catagoryCollection = client.db('findUke').collection('Catagories');
         const productsCollection = client.db('findUke').collection('products');
         const bookingsCollection = client.db('findUke').collection('bookings');
+        const usersCollection = client.db('findUke').collection('users');
 
         app.get('/catagories', async (req, res) => {
             const query = {}
@@ -65,12 +66,40 @@ async function run() {
             res.send(result);
         });
 
+
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     finally {
 
     }
 
 }
+
+
 run().catch(err => console.error(err));
 
 
