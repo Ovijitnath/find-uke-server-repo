@@ -92,7 +92,6 @@ async function run() {
 
         app.post('/bookings', async (req, res) => {
             const booking = req.body;
-            console.log(booking);
             const query = {
                 booked: booking.productName,
             }
@@ -187,7 +186,6 @@ async function run() {
 
         app.post('/users', async (req, res) => {
             const user = req.body;
-            console.log(user);
             const result = await usersCollection.insertOne(user);
             res.send(result);
         });
@@ -255,23 +253,6 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updatedDoc, options);
             res.send(result);
         })
-
-
-
-
-        // app.delete('/users/admin/:id', verifyJWT, async (req, res) => {
-        //     const id = req.params.id;
-        //     const filter = { _id: ObjectId(id) };
-        //     const result = await usersCollection.deleteOne(filter);
-        //     res.send(result);
-        // })
-
-
-
-
-
-
-
 
 
 
