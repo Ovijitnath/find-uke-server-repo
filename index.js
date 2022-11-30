@@ -73,6 +73,13 @@ async function run() {
             res.send(bookings);
         });
 
+        app.get('/bookings/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const booking = await bookingsCollection.findOne(query);
+            res.send(booking);
+        })
+
 
         app.post('/bookings', async (req, res) => {
             const booking = req.body;
@@ -155,6 +162,12 @@ async function run() {
 
 
 
+        // app.delete('/users/admin/:id', verifyJWT, async (req, res) => {
+        //     const id = req.params.id;
+        //     const filter = { _id: ObjectId(id) };
+        //     const result = await usersCollection.deleteOne(filter);
+        //     res.send(result);
+        // })
 
 
 
