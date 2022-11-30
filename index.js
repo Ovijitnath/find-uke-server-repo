@@ -62,7 +62,7 @@ async function run() {
         });
 
 
-        app.post('/products', async (req, res) => {
+        app.post('/catagory', async (req, res) => {
             const product = req.body;
             const result = await productsCollection.insertOne(product);
             res.send(result);
