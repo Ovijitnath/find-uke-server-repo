@@ -20,6 +20,8 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+
+// Verifying User With JWT Token
 function verifyJWT(req, res, next) {
 
     const authHeader = req.headers.authorization;
@@ -41,12 +43,15 @@ function verifyJWT(req, res, next) {
 
 async function run() {
     try {
+        // Collections of MongoDB
         const catagoryCollection = client.db('findUke').collection('Catagories');
         const productsCollection = client.db('findUke').collection('products');
         const bookingsCollection = client.db('findUke').collection('bookings');
         const usersCollection = client.db('findUke').collection('users');
         const paymentsCollection = client.db('findUke').collection('payments');
 
+
+        // Catagories Displaying in home
         app.get('/catagories', async (req, res) => {
             const query = {}
             const cursor = catagoryCollection.find(query);
@@ -69,7 +74,7 @@ async function run() {
         });
 
 
-
+        // Handling Bookings By The User
         app.get('/bookings', verifyJWT, async (req, res) => {
             const email = req.query.email;
             const decodedEmail = req.decoded.email;
@@ -109,6 +114,7 @@ async function run() {
         });
 
 
+        // Payment Method initializing
         app.post('/create-payment-intent', async (req, res) => {
             const booking = req.body;
             const price = booking.price;
@@ -142,7 +148,7 @@ async function run() {
             res.send(result);
         })
 
-
+        //  JWT Token Matching
 
         app.get('/jwt', async (req, res) => {
             const email = req.query.email;
@@ -163,7 +169,7 @@ async function run() {
             res.send(users);
         })
 
-
+        //    User Info By Their Role
         app.get('/users/admin/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email }
